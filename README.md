@@ -1,4 +1,4 @@
-# Projeto Integrador - Infraestrutura de Redes e Servidores Linux
+# Projeto (Rede De Computadores) - Infraestrutura de Redes e Servidores Linux
 
 Infraestrutura corporativa segmentada em tres zonas (DMZ, LAN e DB Zone), com firewall,
 DNS/DHCP, servidor web com HTTPS, banco PostgreSQL, servidor de arquivos Samba com quotas
