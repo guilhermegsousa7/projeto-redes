@@ -1,0 +1,8 @@
+# /etc/netplan/01-projeto.yaml (web) - chmod 600
+network:
+  version: 2
+  ethernets:
+    enp0s3:
+      addresses: [10.0.1.10/24]
+      routes: [{to: default, via: 10.0.1.1}]
+      nameservers: {addresses: [8.8.8.8]}

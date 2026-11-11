@@ -1,0 +1,33 @@
+# /etc/nginx/sites-available/projeto (habilitar com link em sites-enabled)
+server {
+    listen 80 default_server;
+    server_name _;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl default_server;
+    server_name web.empresa.local _;
+
+    ssl_certificate     /etc/nginx/ssl/web.crt;
+    ssl_certificate_key /etc/nginx/ssl/web.key;
+    ssl_protocols TLSv1.2 TLSv1.3;
+
+    access_log /var/log/nginx/projeto_access.log;
+    error_log  /var/log/nginx/projeto_error.log;
+
+    proxy_intercept_errors on;
+    error_page 404 /404.html;
+    error_page 500 502 503 504 /50x.html;
+    location = /404.html { root /var/www/erros; internal; }
+    location = /50x.html { root /var/www/erros; internal; }
+
+    location / {
+        limit_req zone=reqlimit burst=10 nodelay;
+        limit_req_status 429;
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
